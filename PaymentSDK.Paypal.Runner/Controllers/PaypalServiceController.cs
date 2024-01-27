@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using PaymentProvider.Paypal.Constants;
+using ZienPaymentSDK.Paypal.Constants;
 using ZienPaymentSDK.Paypal.Models;
 using ZienPaymentSDK.Paypal.Services;
 

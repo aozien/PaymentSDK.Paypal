@@ -1,4 +1,4 @@
-﻿namespace PaymentProvider.Paypal.Constants
+﻿namespace ZienPaymentSDK.Paypal.Constants
 {
     public static class PaypalWebHookConstants
     {

@@ -1,4 +1,4 @@
-﻿namespace ZienPaymentSDK.Paypal.Cosntants
+﻿namespace ZienPaymentSDK.Paypal.Constants
 {
     public class PaypalApiConsts
     {
