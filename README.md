@@ -46,3 +46,7 @@ or in AppSettings file
 ## Request Authorizations
 by default the library uses BasicAuth, but you can change this behavior by overriding the 
 `IAuthenticator` service in the dependency Injection
+
+
+## Contributions
+Feel free to Request features/ Report bugs add examples 
