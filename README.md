@@ -2,6 +2,13 @@
 Modern paypal .Net SDK, Acts as a wrapper for paypal REST API, for creating resources such as orders products, and subscriptions, 
 it also can be used for processing paypal webhook events
 
+## Current Capabilities
+- Manage Paypal Resources (Products/ Plans/ Orders/ Subscriptions/ Webhooks)
+- Create Checkout Sessions
+- Capture Order
+- Create Subscription
+- Verify Paypal Webhook events
+- Process Webhook events
 
 ## Getting Started
 
