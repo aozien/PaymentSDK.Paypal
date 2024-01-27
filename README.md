@@ -6,7 +6,9 @@ it also can be used for processing paypal webhook events
 ## Getting Started
 
 1- Install the project's nuget package ZienPaymentSDK.Paypal
-
+```
+dotnet add package ZienPaymentSDK.Paypal
+```
 2- In your startup file, or program.cs add Paypal Service to Dependency Injections 
 ```
 var builder = WebApplication.CreateBuilder(args);
