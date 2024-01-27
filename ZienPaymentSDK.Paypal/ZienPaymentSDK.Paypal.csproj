@@ -7,7 +7,7 @@
 		<Title>ZienPayment SDK Paypal API Services</Title>
 		<Version>0.1.0</Version>
 		<PackageTags>payment;paypal;api;sdk;dependency injection;webhook</PackageTags>
-		<Description>Wrapper for paypal api, for creating resources such as orders products, and subscriptions, it also can be used for processing paypal webhook events</Description>
+		<Description>Modern paypal .Net SDK for creating checkout and subscriptions, acts as a wrapper for paypal api, for creating resources such as orders products, and subscriptions, it also can be used for processing paypal webhook events</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
