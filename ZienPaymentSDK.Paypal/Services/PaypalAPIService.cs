@@ -1,19 +1,30 @@
-﻿using PaymentProvider.Paypal.Services.PaypalSDK;
+﻿using Microsoft.Extensions.Options;
+using PaymentProvider.Paypal.Services.PaypalSDK;
 using RestSharp.Serialization;
 using ZienPaymentSDK.Paypal.Services.PaypalManagers;
 using ZienPaymentSDK.Paypal.ValueObjects;
 
 namespace ZienPaymentSDK.Paypal.Services
 {
-    public class PaypalAPIService
+
+    public class PaypalAPIService : IPaypalAPIService
     {
         protected readonly IRestSerializer _restSerializer;
         protected readonly PaypalProviderOptions _paypalOptions;
-        public PaypalAPIService(IRestSerializer restSerializer, PaypalProviderOptions options)
+
+        public PaypalAPIService(IRestSerializer restSerializer,
+            IOptionsSnapshot<PaypalProviderOptions> options)
+        {
+            _restSerializer = restSerializer;
+            _paypalOptions = options.Value;
+        }
+
+        internal PaypalAPIService(IRestSerializer restSerializer, PaypalProviderOptions options)
         {
             _restSerializer = restSerializer;
             _paypalOptions = options;
         }
+
         private PaypalProductManager _paypalProductManager;
         public PaypalProductManager ProductsManager
         {

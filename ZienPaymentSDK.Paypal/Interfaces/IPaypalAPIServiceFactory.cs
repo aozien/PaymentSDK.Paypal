@@ -5,6 +5,6 @@ namespace ZienPaymentSDK.Paypal.Interfaces
 {
     public interface IPaypalAPIServiceFactory
     {
-        PaypalAPIService GetUnitOfWork(PaypalProviderOptions options);
+        PaypalAPIService CreateUnitOfWork(PaypalProviderOptions options);
     }
 }

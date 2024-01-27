@@ -7,15 +7,13 @@ namespace ZienPaymentSDK.Paypal.Services
     public class PaypalAPIServiceFactory : IPaypalAPIServiceFactory
     {
         private readonly IRestSerializer _restSerializer;
-        private readonly PaypalProviderOptions _options;
 
-        public PaypalAPIServiceFactory(PaypalProviderOptions options, IRestSerializer restSerializer)
+        public PaypalAPIServiceFactory(IRestSerializer restSerializer)
         {
-            _options = options;
             _restSerializer = restSerializer;
         }
 
-        public PaypalAPIService GetUnitOfWork(
+        public PaypalAPIService CreateUnitOfWork(
             PaypalProviderOptions paypalOpts)
         {
             return new PaypalAPIService(_restSerializer, paypalOpts);

@@ -25,6 +25,7 @@ namespace ZienPaymentSDK.Paypal.Services.PaypalManagers
             client.Authenticator = new HttpBasicAuthenticator(PaypalOptions.ClientId, PaypalOptions.ClientSecret);
             return client;
         }
+
         protected IRestRequest CreateRequest(Method method, string requestId = null, string prefer = null)
         {
             var request = new RestRequest(method);
