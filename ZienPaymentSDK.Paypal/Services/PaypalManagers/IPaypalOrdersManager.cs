@@ -4,7 +4,7 @@ using RestSharp;
 
 namespace ZienPaymentSDK.Paypal.Services.PaypalManagers
 {
-    internal interface IPaypalOrdersManager
+    public interface IPaypalOrdersManager
     {
         Task<IRestResponse<PaypalOrder>> CaptureAsync(string orderId);
         Task<IRestResponse<PaypalOrder>> CreateAsync(PaypalOrder product, string prefer = "representation", string paypalRequestId = "Orders-my-testing01");

@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using Microsoft.Extensions.Options;
+using RestSharp;
+using RestSharp.Authenticators;
 using RestSharp.Serialization;
 using ZienPaymentSDK.Paypal.Models;
 using ZienPaymentSDK.Paypal.Services.PaypalManagers;
@@ -8,16 +10,17 @@ namespace PaymentProvider.Paypal.Services.PaypalSDK
 {
     public class PaypalSubscriptionManager : BasePaypalManager, IPaypalSubscriptionManager
     {
-        public PaypalSubscriptionManager(PaypalProviderOptions options,
-            IRestSerializer jsonSerializer)
-            : base(options, jsonSerializer)
+        internal PaypalSubscriptionManager(PaypalProviderOptions options,
+            IRestSerializer jsonSerializer,
+            IAuthenticator requestAuthenticator)
+        : base(options, jsonSerializer, requestAuthenticator) { }
+
+        public PaypalSubscriptionManager(IOptionsSnapshot<PaypalProviderOptions> options,
+            IRestSerializer jsonSerializer,
+            IAuthenticator requestAuthenticator)
+            : base(options.Value, jsonSerializer, requestAuthenticator)
         {
         }
-        //public PaypalSubscriptionManager(IOptionsSnapshot<PaypalProviderOptions> options,
-        //    IRestSerializer jsonSerializer)
-        //    : base(options, jsonSerializer)
-        //{
-        //}
 
         public async Task<IRestResponse> CreateAsync(PaypalSubscription subscription, string paypalRequestId = "SUBSCRIPTION-my-testing01")
         {

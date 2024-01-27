@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using Microsoft.Extensions.Options;
+using RestSharp;
+using RestSharp.Authenticators;
 using RestSharp.Serialization;
 using ZienPaymentSDK.Paypal.Models;
 using ZienPaymentSDK.Paypal.ValueObjects;
@@ -7,16 +9,18 @@ namespace ZienPaymentSDK.Paypal.Services.PaypalManagers
 {
     public class PaypalPlanManager : BasePaypalManager, IPaypalPlanManager
     {
-        public PaypalPlanManager(PaypalProviderOptions options,
-             IRestSerializer jsonSerializer)
-             : base(options, jsonSerializer)
+        internal PaypalPlanManager(PaypalProviderOptions options,
+            IRestSerializer jsonSerializer,
+            IAuthenticator requestAuthenticator)
+        : base(options, jsonSerializer, requestAuthenticator)
         {
         }
-        //public PaypalPlanManager(IOptionsSnapshot<PaypalProviderOptions> options,
-        //    IRestSerializer jsonSerializer)
-        //    : base(options.Value, jsonSerializer)
-        //{
-        //}
+        public PaypalPlanManager(IOptionsSnapshot<PaypalProviderOptions> options,
+            IRestSerializer jsonSerializer,
+            IAuthenticator requestAuthenticator)
+        : base(options.Value, jsonSerializer, requestAuthenticator)
+        {
+        }
 
         public async Task<IRestResponse<PaypalPlan>> CreateAsync(PaypalPlan plan, string prefer = "representation", string paypalRequestId = "PLAN-my-testing01")
         {

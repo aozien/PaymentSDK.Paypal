@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using PaymentProvider.Paypal.Services.PaypalSDK;
+using RestSharp.Authenticators;
 using RestSharp.Serialization;
 using ZienPaymentSDK.Paypal.Services.PaypalManagers;
 using ZienPaymentSDK.Paypal.ValueObjects;
@@ -10,12 +11,15 @@ namespace ZienPaymentSDK.Paypal.Services
     public class PaypalAPIService : IPaypalAPIService
     {
         protected readonly IRestSerializer _restSerializer;
+        private readonly IAuthenticator _requestAuthenticator;
         protected readonly PaypalProviderOptions _paypalOptions;
 
         public PaypalAPIService(IRestSerializer restSerializer,
-            IOptionsSnapshot<PaypalProviderOptions> options)
+            IOptionsSnapshot<PaypalProviderOptions> options,
+            IAuthenticator requestAuthenticator)
         {
             _restSerializer = restSerializer;
+            _requestAuthenticator = requestAuthenticator;
             _paypalOptions = options.Value;
         }
 
@@ -32,7 +36,7 @@ namespace ZienPaymentSDK.Paypal.Services
             {
                 if (_paypalProductManager == null)
                 {
-                    _paypalProductManager = new PaypalProductManager(_paypalOptions, _restSerializer);
+                    _paypalProductManager = new PaypalProductManager(_paypalOptions, _restSerializer, _requestAuthenticator);
                 }
                 return _paypalProductManager;
 
@@ -47,7 +51,7 @@ namespace ZienPaymentSDK.Paypal.Services
             {
                 if (_paypalPlansManager == null)
                 {
-                    _paypalPlansManager = new PaypalPlanManager(_paypalOptions, _restSerializer);
+                    _paypalPlansManager = new PaypalPlanManager(_paypalOptions, _restSerializer,_requestAuthenticator);
                 }
                 return _paypalPlansManager;
 
@@ -62,7 +66,7 @@ namespace ZienPaymentSDK.Paypal.Services
             {
                 if (_paypalWebhooksManager == null)
                 {
-                    _paypalWebhooksManager = new PaypalWebhookManager(_paypalOptions, _restSerializer);
+                    _paypalWebhooksManager = new PaypalWebhookManager(_paypalOptions, _restSerializer,_requestAuthenticator);
                 }
                 return _paypalWebhooksManager;
 
@@ -77,7 +81,7 @@ namespace ZienPaymentSDK.Paypal.Services
             {
                 if (_paypalSubscriptionsManager == null)
                 {
-                    _paypalSubscriptionsManager = new PaypalSubscriptionManager(_paypalOptions, _restSerializer);
+                    _paypalSubscriptionsManager = new PaypalSubscriptionManager(_paypalOptions, _restSerializer,_requestAuthenticator);
                 }
                 return _paypalSubscriptionsManager;
 
@@ -92,7 +96,7 @@ namespace ZienPaymentSDK.Paypal.Services
             {
                 if (_paypalOrdersManager == null)
                 {
-                    _paypalOrdersManager = new PaypalOrdersManager(_paypalOptions, _restSerializer);
+                    _paypalOrdersManager = new PaypalOrdersManager(_paypalOptions, _restSerializer,_requestAuthenticator);
                 }
                 return _paypalOrdersManager;
 

@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Authenticators;
 using RestSharp.Serialization;
 using ZienPaymentSDK.Paypal.Models;
 using ZienPaymentSDK.Paypal.ValueObjects;
@@ -8,11 +10,17 @@ namespace ZienPaymentSDK.Paypal.Services.PaypalManagers
 {
     public class PaypalWebhookManager : BasePaypalManager, IPaypalWebhookManager
     {
-        public PaypalWebhookManager(PaypalProviderOptions options,
-         IRestSerializer jsonSerializer) : base(options, jsonSerializer) { }
+        internal PaypalWebhookManager(PaypalProviderOptions options,
+            IRestSerializer jsonSerializer,
+            IAuthenticator requestAuthenticator)
+        : base(options, jsonSerializer, requestAuthenticator) { }
 
-        //public PaypalWebhookManager(IOptionsSnapshot<PaypalProviderOptions> options,
-        //    IRestSerializer jsonSerializer) : base(options, jsonSerializer) { }
+        public PaypalWebhookManager(IOptionsSnapshot<PaypalProviderOptions> options,
+        IRestSerializer jsonSerializer,
+        IAuthenticator requestAuthenticator)
+            : base(options.Value, jsonSerializer, requestAuthenticator)
+        {
+        }
 
         public async Task<IRestResponse<PaypalWebhook>> CreateAsync(PaypalWebhook webhookDef, string prefer = "representation", string paypalRequestId = "PRODUCT-my-testing01")
         {
@@ -41,9 +49,14 @@ namespace ZienPaymentSDK.Paypal.Services.PaypalManagers
 
 
         /// <summary>Verify PayPal Webhook Signature</summary>
-        public async Task<bool> VerifyEvent(string webhookId, string requestBodyRaw,
-            Dictionary<string, string> headerDictionary)
+        public async Task<bool> VerifyEvent(string requestBodyRaw, Dictionary<string, string> headerDictionary)
         {
+            var webhookId = PaypalOptions.WebhookId;
+
+            if (String.IsNullOrWhiteSpace(webhookId)) {
+                throw new Exception("Paypal Webhook Id value must be provided to be able to verify webhook events");
+            }
+
             var client = GetClient("/v1/notifications/verify-webhook-signature");
             var request = CreateRequest(Method.POST);
             // !!IMPORTANT!!
@@ -67,7 +80,4 @@ namespace ZienPaymentSDK.Paypal.Services.PaypalManagers
         }
 
     }
-
-
-
 }

@@ -2,7 +2,7 @@
 using RestSharp;
 using RestSharp.Serialization;
 
-namespace ZienPaymentSDK.Paypal.Services;
+namespace ZienPaymentSDK.Paypal.DefaultImplementations;
 
 public class DefaultJsonSerializer : IRestSerializer
 {

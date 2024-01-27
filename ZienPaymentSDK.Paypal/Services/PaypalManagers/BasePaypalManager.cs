@@ -1,28 +1,36 @@
-﻿using RestSharp;
+﻿using Microsoft.Extensions.Options;
+using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Serialization;
 using ZienPaymentSDK.Paypal.ValueObjects;
 
 namespace ZienPaymentSDK.Paypal.Services.PaypalManagers
 {
-    public class BasePaypalManager
+    public abstract class BasePaypalManager
     {
+        protected readonly IAuthenticator RequestAuthenticator;
+
         protected PaypalProviderOptions PaypalOptions { get; }
         protected IRestSerializer JsonSerializer { get; }
 
         public BasePaypalManager(
             PaypalProviderOptions options,
-            IRestSerializer jsonSerializer)
+            IRestSerializer jsonSerializer,
+            IAuthenticator requestAuthenticator)
         {
             PaypalOptions = options;
             JsonSerializer = jsonSerializer;
+            RequestAuthenticator = requestAuthenticator;
         }
 
 
         protected IRestClient GetClient(string url)
         {
-            var client = new RestClient(PaypalOptions.BaseUrl + url).UseSerializer(() => JsonSerializer);
-            client.Authenticator = new HttpBasicAuthenticator(PaypalOptions.ClientId, PaypalOptions.ClientSecret);
+            var client = new RestClient(PaypalOptions.BaseUrl + url)
+                                .UseSerializer(() => JsonSerializer);
+
+            client.Authenticator = RequestAuthenticator;
+            //new HttpBasicAuthenticator(PaypalOptions.ClientId, PaypalOptions.ClientSecret);
             return client;
         }
 

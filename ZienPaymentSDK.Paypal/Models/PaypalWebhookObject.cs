@@ -14,7 +14,7 @@ namespace ZienPaymentSDK.Paypal.Models
         public string ResourceType { get; set; }
 
         [JsonProperty("event_type")]
-        public string event_type { get; set; }
+        public string EventType { get; set; }
 
         [JsonProperty("summary")]
         public string Summary { get; set; }
